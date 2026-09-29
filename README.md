@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://bizcard.ch">
-    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=20&duration=3200&pause=900&color=2F81F7&center=true&vCenter=true&width=640&lines=Building+bizCARD+%E2%80%94+digital+business+cards+for+companies;jq+Playground+%C2%B7+33k%2B+installs+on+VS+Code;TypeScript+%C2%B7+Effect-TS+%C2%B7+Next.js+%C2%B7+Bun;Secrets+belong+in+the+keychain%2C+not+in+.env" alt="What I'm up to" />
+    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&weight=600&size=18&duration=3200&pause=900&color=2F81F7&center=true&vCenter=true&width=760&lines=Building+bizCARD+%E2%80%94+digital+business+cards+for+companies;jq+Playground+%C2%B7+33k%2B+installs+on+VS+Code;TypeScript+%C2%B7+Effect-TS+%C2%B7+Next.js+%C2%B7+Bun;Secrets+belong+in+the+keychain%2C+not+in+.env" alt="What I'm up to" />
   </a>
 </p>
 
@@ -16,7 +16,7 @@
   <a href="https://x.com/davidnussio"><img src="https://img.shields.io/badge/@davidnussio-000000?style=flat-square&logo=x&logoColor=white" alt="X" /></a>
   <a href="https://marketplace.visualstudio.com/publishers/davidnussio"><img src="https://img.shields.io/badge/VS%20Code%20Marketplace-0078d4?style=flat-square&logo=visualstudiocode&logoColor=white" alt="VS Code Marketplace" /></a>
   <a href="https://www.npmjs.com/~davidnussio"><img src="https://img.shields.io/badge/npm-cb3837?style=flat-square&logo=npm&logoColor=white" alt="npm" /></a>
-  <img src="https://img.shields.io/badge/Lugano%20%F0%9F%87%A8%F0%9F%87%AD-d52b1e?style=flat-square" alt="Lugano, Switzerland" />
+  <img src="https://img.shields.io/badge/Lugano-Switzerland-d52b1e?style=flat-square" alt="Lugano, Switzerland" />
 </p>
 
 ---
