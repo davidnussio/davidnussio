@@ -1,7 +1,7 @@
 <!-- Cards live on the `output` branch, rebuilt daily by .github/workflows/profile.yml -->
 
 <p align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&height=220&color=0:1e1b4b,55:4338ca,100:0ea5e9&text=David%20Nussio&fontColor=ffffff&fontSize=64&fontAlignY=36&desc=Software%20engineer%20%C2%B7%20DevOps%20advocate%20%C2%B7%20Lugano%2C%20Switzerland&descSize=18&descAlignY=56&animation=fadeIn" alt="David Nussio" width="100%" />
+  <img src="https://capsule-render.vercel.app/api?type=waving&height=220&color=0:1e1b4b,55:4338ca,100:0ea5e9&text=David%20Nussio&fontColor=ffffff&fontSize=64&fontAlignY=36&desc=Software%20engineer%20%C2%B7%20DevOps%20advocate%20%C2%B7%20Lugano%2C%20Switzerland&descSize=18&descAlignY=56" alt="David Nussio" width="100%" />
 </p>
 
 <p align="center">
