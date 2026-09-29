@@ -1,0 +1,97 @@
+# Generates the images used by README.md (stats, languages, pinned repos,
+# contribution snake) and publishes them to the `output` branch, so the
+# profile never depends on public widget instances that go down.
+name: Profile cards
+
+on:
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-cards
+  cancel-in-progress: true
+
+env:
+  # Transparent cards with mid-tone colours: readable on both GitHub themes.
+  CARD_STYLE: bg_color=00000000&hide_border=true&title_color=2f81f7&text_color=8b949e&icon_color=2f81f7&ring_color=2f81f7
+
+jobs:
+  cards:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Stats card
+        uses: readme-tools/github-readme-stats-action@v2
+        with:
+          card: stats
+          options: username=${{ github.repository_owner }}&show_icons=true&include_all_commits=true&rank_icon=github&${{ env.CARD_STYLE }}
+          path: dist/stats.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Top languages card
+        uses: readme-tools/github-readme-stats-action@v2
+        with:
+          card: top-langs
+          options: username=${{ github.repository_owner }}&layout=compact&langs_count=8&hide=html,css,scss,dockerfile&card_width=360&${{ env.CARD_STYLE }}
+          path: dist/top-langs.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin · vscode-jq-playground
+        uses: readme-tools/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=vscode-jq-playground&description_lines_count=2&${{ env.CARD_STYLE }}
+          path: dist/pin-vscode-jq-playground.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin · envsec
+        uses: readme-tools/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=envsec&description_lines_count=2&${{ env.CARD_STYLE }}
+          path: dist/pin-envsec.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin · ingombro
+        uses: readme-tools/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=ingombro&description_lines_count=2&${{ env.CARD_STYLE }}
+          path: dist/pin-ingombro.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pin · effect-audit-tool
+        uses: readme-tools/github-readme-stats-action@v2
+        with:
+          card: pin
+          options: username=${{ github.repository_owner }}&repo=effect-audit-tool&description_lines_count=2&${{ env.CARD_STYLE }}
+          path: dist/pin-effect-audit-tool.svg
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      # Last on purpose: this Docker action writes as root, so dist/ must
+      # already exist and be owned by the runner user.
+      - name: Contribution snake
+        uses: Platane/snk@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/snake.svg?palette=github-light&color_snake=2f81f7
+            dist/snake-dark.svg?palette=github-dark&color_snake=2f81f7
+
+      - name: Publish to the output branch
+        uses: crazy-max/ghaction-github-pages@v5
+        with:
+          target_branch: output
+          build_dir: dist
+          commit_message: "chore: update profile cards"
+          jekyll: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
