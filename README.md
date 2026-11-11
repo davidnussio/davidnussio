@@ -27,7 +27,7 @@
 const david = {
   basedIn: "Lugano, Switzerland 🇨🇭",
   building: { company: "dambox Sagl", product: "bizCARD", url: "https://bizcard.ch" },
-  speaks: ["TypeScript", "Effect-TS", "Next.js", "Bun", "a bit of Rust and C++"],
+  speaks: ["TypeScript", "Effect-TS", "Next.js", "Bun", "Kotlin", "a bit of Rust and C++"],
   cares: ["typed errors", "developer tooling", "infrastructure as code", "good CLIs"],
   onGitHubSince: 2010,
 } as const;
@@ -36,7 +36,8 @@ const david = {
 - 🏗️ Building **[bizCARD](https://bizcard.ch)**: digital business cards for teams, with dynamic QR codes and Microsoft Entra ID SSO / SCIM provisioning. Next.js, Postgres, Vercel and the AI SDK, made in Ticino.
 - 🧩 Maintaining **[jq Playground](https://marketplace.visualstudio.com/items?itemName=davidnussio.vscode-jq-playground)**, a jq notebook inside VS Code: 33k+ installs, ★ 4.7.
 - 🔐 Shipping **[envsec](https://envsec.dev)**, secrets in your OS keychain instead of `.env` files.
-- 🤖 Lately: AI-assisted developer tools, Effect-TS everywhere, native desktop apps with Bun.
+- 📺 Publishing **[Divano](https://divano.dambox.ch)** on Google Play, an IPTV player that comes with no content of its own.
+- 🤖 Lately: CQRS and event sourcing on Effect v4, Android apps in Kotlin, native desktop apps with Bun, AI-assisted developer tools.
 
 ### 🚀 Featured projects
 
@@ -67,17 +68,42 @@ const david = {
       <br />
       <img src="https://img.shields.io/badge/macOS-native-8b949e?style=flat-square&logo=apple&logoColor=white" alt="macOS" />
       <img src="https://img.shields.io/badge/Electrobun-Bun-8b949e?style=flat-square&logo=bun&logoColor=white" alt="Electrobun and Bun" />
+      <a href="https://ingombro-web.vercel.app"><img src="https://img.shields.io/badge/site-ingombro-8b949e?style=flat-square" alt="ingombro website" /></a>
       <br />
       <sub>Disk space analyzer with an animated treemap. Finds <code>node_modules</code>, <code>target</code>, <code>__pycache__</code> and friends, and gets your gigabytes back.</sub>
     </td>
     <td width="50%" valign="top">
-      <a href="https://github.com/davidnussio/effect-audit-tool"><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pin-effect-audit-tool.svg" alt="effect-audit-tool" width="100%" /></a>
+      <a href="https://github.com/davidnussio/effect-cqrs"><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pin-effect-cqrs.svg" alt="effect-cqrs" width="100%" /></a>
       <br />
-      <img src="https://img.shields.io/badge/Effect--TS-8b949e?style=flat-square&logo=effect&logoColor=white" alt="Effect-TS" />
-      <img src="https://img.shields.io/badge/SARIF-2.1.0-8b949e?style=flat-square" alt="SARIF 2.1.0" />
-      <img src="https://img.shields.io/badge/OWASP-Top%2010-8b949e?style=flat-square" alt="OWASP Top 10" />
+      <a href="https://www.npmjs.com/package/effect-cqrs"><img src="https://img.shields.io/npm/v/effect-cqrs?style=flat-square&color=2f81f7&label=npm" alt="npm version" /></a>
+      <img src="https://img.shields.io/badge/Effect-v4-8b949e?style=flat-square&logo=effect&logoColor=white" alt="Effect v4" />
+      <a href="https://davidnussio.github.io/effect-cqrs/"><img src="https://img.shields.io/badge/docs-effect--cqrs-8b949e?style=flat-square" alt="effect-cqrs docs" /></a>
       <br />
-      <sub>LLM security auditor in four phases: triage, deep audit, red-team validation, remediation. CVSS scoring and PoC per finding.</sub>
+      <sub>My 2019 <code>moleculer-cqrs</code>, ported to Effect v4: commands decide on events, events are the only source of truth, read models are projections you can rebuild. An experiment, with an <code>LLMS.md</code> for coding agents.</sub>
+    </td>
+  </tr>
+</table>
+
+### 📱 On your phone and TV
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <a href="https://divano.dambox.ch"><b>📺 Divano</b></a>
+      <br />
+      <a href="https://play.google.com/store/apps/details?id=ch.dambox.divano"><img src="https://img.shields.io/badge/Google%20Play-414141?style=flat-square&logo=googleplay&logoColor=white" alt="Get it on Google Play" /></a>
+      <a href="https://divano.dambox.ch"><img src="https://img.shields.io/badge/site-divano.dambox.ch-8b949e?style=flat-square" alt="divano.dambox.ch" /></a>
+      <img src="https://img.shields.io/badge/Kotlin-Android%20TV-8b949e?style=flat-square&logo=kotlin&logoColor=white" alt="Kotlin, Android TV" />
+      <br />
+      <sub>An IPTV player for Android TV and phones that comes with no content: bring your own playlist, or try the demo. Optional sync through dambox's server or your own.</sub>
+    </td>
+    <td width="50%" valign="top">
+      <a href="https://pace.dambox.ch"><b>🏃 Pace</b></a>
+      <br />
+      <a href="https://pace.dambox.ch"><img src="https://img.shields.io/badge/site-pace.dambox.ch-8b949e?style=flat-square" alt="pace.dambox.ch" /></a>
+      <img src="https://img.shields.io/badge/Kotlin-Android-8b949e?style=flat-square&logo=kotlin&logoColor=white" alt="Kotlin, Android" />
+      <br />
+      <sub>Running pace for the track: pace, reps, 400 m splits and training zones. Offline, no account.</sub>
     </td>
   </tr>
 </table>
@@ -88,23 +114,24 @@ const david = {
 
 | Project | What it does |
 | --- | --- |
+| [effect-audit-tool](https://github.com/davidnussio/effect-audit-tool) | LLM security auditor in four phases (triage, deep audit, red-team validation, remediation), SARIF 2.1.0 output |
+| [oauth-simulator](https://davidnussio.github.io/oauth-simulator/) | Interactive OAuth 2.0 and OpenID Connect lab: real flows against an authorization server running in a Service Worker (in Italian) |
 | [github-stars-organizer](https://github.com/davidnussio/github-stars-organizer) | Semantic search over your GitHub stars: Effect-TS, SQLite and embeddings |
 | [ai-decisions](https://github.com/davidnussio/ai-decisions) | Claude skill that records architectural decisions and syncs them to `CLAUDE.md`, Cursor, Copilot and Kiro |
 | [spectra-scope](https://github.com/davidnussio/spectra-scope) | VST3 plugin (JUCE, C++) for FL Studio: spectrum, oscilloscope, goniometer, loudness |
 | [dotfiles](https://github.com/davidnussio/dotfiles) | My macOS machine in one script: fish, Ghostty, Neovim, zellij, mise |
 | [homebrew-tap](https://github.com/davidnussio/homebrew-tap) | Homebrew formulae for my CLIs |
-| [moleculer-cqrs](https://github.com/davidnussio/moleculer-cqrs) | From the archive: CQRS and event sourcing for Moleculer microservices |
 
 </details>
 
 ### 🧰 Toolbox
 
 <p align="center">
-  <img src="https://skillicons.dev/icons?i=ts,js,react,nextjs,tailwind,vite,nodejs,bun,rust,cpp&perline=10" alt="Languages and frameworks" />
+  <img src="https://skillicons.dev/icons?i=ts,js,react,nextjs,tailwind,vite,nodejs,bun,kotlin,rust,cpp&perline=11" alt="Languages and frameworks" />
   <br />
   <img src="https://skillicons.dev/icons?i=postgres,sqlite,redis,prisma,docker,kubernetes,gcp,azure,vercel,githubactions&perline=10" alt="Data and infrastructure" />
   <br />
-  <img src="https://skillicons.dev/icons?i=go,lua,bash,neovim,vscode,git,linux,apple,firebase,supabase&perline=10" alt="Tools" />
+  <img src="https://skillicons.dev/icons?i=go,lua,bash,neovim,vscode,androidstudio,git,linux,apple,firebase,supabase&perline=11" alt="Tools" />
 </p>
 
 <p align="center">

@@ -68,12 +68,12 @@ jobs:
           path: dist/pin-ingombro.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pin · effect-audit-tool
+      - name: Pin · effect-cqrs
         uses: readme-tools/github-readme-stats-action@v2
         with:
           card: pin
-          options: username=${{ github.repository_owner }}&repo=effect-audit-tool&description_lines_count=2&${{ env.CARD_STYLE }}
-          path: dist/pin-effect-audit-tool.svg
+          options: username=${{ github.repository_owner }}&repo=effect-cqrs&description_lines_count=2&${{ env.CARD_STYLE }}
+          path: dist/pin-effect-cqrs.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
       # Last on purpose: this Docker action writes as root, so dist/ must
