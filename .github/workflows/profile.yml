@@ -1,5 +1,5 @@
-# Generates the images used by README.md (stats, languages, pinned repos,
-# contribution snake) and publishes them to the `output` branch, so the
+# Generates the images used by README.md (hero, project cards, stats,
+# languages, contribution snake) and publishes them to the `output` branch, so the
 # profile never depends on public widget instances that go down.
 name: Profile cards
 
@@ -44,37 +44,12 @@ jobs:
           path: dist/top-langs.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Pin · vscode-jq-playground
-        uses: readme-tools/github-readme-stats-action@v2
-        with:
-          card: pin
-          options: username=${{ github.repository_owner }}&repo=vscode-jq-playground&description_lines_count=2&${{ env.CARD_STYLE }}
-          path: dist/pin-vscode-jq-playground.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pin · envsec
-        uses: readme-tools/github-readme-stats-action@v2
-        with:
-          card: pin
-          options: username=${{ github.repository_owner }}&repo=envsec&description_lines_count=2&${{ env.CARD_STYLE }}
-          path: dist/pin-envsec.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pin · ingombro
-        uses: readme-tools/github-readme-stats-action@v2
-        with:
-          card: pin
-          options: username=${{ github.repository_owner }}&repo=ingombro&description_lines_count=2&${{ env.CARD_STYLE }}
-          path: dist/pin-ingombro.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Pin · effect-cqrs
-        uses: readme-tools/github-readme-stats-action@v2
-        with:
-          card: pin
-          options: username=${{ github.repository_owner }}&repo=effect-cqrs&description_lines_count=2&${{ env.CARD_STYLE }}
-          path: dist/pin-effect-cqrs.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+      # Hero, project cards, link pills and stack: drawn by our own script
+      # from scripts/data.mjs, with live stars, installs and versions.
+      - name: Project cards
+        run: node scripts/build.mjs dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Last on purpose: this Docker action writes as root, so dist/ must
       # already exist and be owned by the runner user.
