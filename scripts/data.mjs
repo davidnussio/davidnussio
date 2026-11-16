@@ -1,7 +1,7 @@
 // Everything the profile shows. Add a project here, then run
 // `node scripts/build.mjs --readme` to refresh the README block.
 //
-// size:    wide (full row) | half (two per row) | third (three per row)
+// size:    half (two per row) | third (three per row)
 // status:  live | active | soon
 // metrics: read at build time, each with a fallback for when the API is down
 //   { stars: "repo" }        GitHub stars (hidden below 5)
@@ -21,14 +21,13 @@ export const sections = [
       {
         slug: "bizcard",
         name: "bizCARD",
-        size: "wide",
-        art: "card",
+        size: "half",
         icon: "card",
         accent: ["#2f81f7", "#22d3ee"],
         kind: "SaaS · since 2021",
         summary: "Digital business cards for teams",
         description:
-          "Digital business cards for teams. They work over NFC or a QR code, with no app to install, and the details are always up to date. Dynamic QR codes, Microsoft Entra ID SSO and SCIM provisioning.",
+          "Digital business cards for teams, over NFC or a QR code, with no app to install. Dynamic QR codes, Microsoft Entra ID SSO and SCIM provisioning.",
         chips: ["Next.js", "Postgres", "Vercel"],
         status: "live",
         metrics: [{ text: "bizcard.ch" }],
@@ -57,7 +56,7 @@ export const sections = [
       {
         slug: "pace",
         name: "Pace",
-        size: "half",
+        size: "third",
         icon: "stopwatch",
         accent: ["#f97316", "#fbbf24"],
         kind: "Android · Wear OS",
@@ -73,7 +72,7 @@ export const sections = [
       {
         slug: "lugo",
         name: "LuGo",
-        size: "half",
+        size: "third",
         icon: "bus",
         accent: ["#14b8a6", "#4ade80"],
         kind: "Web app · Lugano",
@@ -89,7 +88,7 @@ export const sections = [
       {
         slug: "webcroc",
         name: "WebCroc",
-        size: "half",
+        size: "third",
         icon: "transfer",
         accent: ["#22c55e", "#a3e635"],
         kind: "Web app · peer to peer",
@@ -165,14 +164,13 @@ export const sections = [
       {
         slug: "jq-playground",
         name: "jq Playground",
-        size: "wide",
-        art: "code",
+        size: "half",
         icon: "braces",
         accent: ["#2f81f7", "#a78bfa"],
         kind: "VS Code extension",
         summary: "jq notebook for VS Code",
         description:
-          "A jq notebook inside VS Code: write filters, pick a data source (file, URL, command output) and see the results instantly. AI support to explain, fix and generate filters.",
+          "A jq notebook inside VS Code: write filters, pick a data source (file, URL, command output) and see the results instantly. AI help to explain and fix filters.",
         chips: ["TypeScript", "Effect", "jq"],
         status: "active",
         metrics: [
@@ -213,7 +211,7 @@ export const sections = [
       {
         slug: "lazyjq",
         name: "lazyjq",
-        size: "half",
+        size: "third",
         icon: "terminal",
         accent: ["#f97316", "#ef4444"],
         kind: "TUI · Homebrew",
@@ -229,7 +227,7 @@ export const sections = [
       {
         slug: "effect-cqrs",
         name: "effect-cqrs",
-        size: "half",
+        size: "third",
         icon: "layers",
         accent: ["#a78bfa", "#60a5fa"],
         kind: "Library · npm",
@@ -249,7 +247,7 @@ export const sections = [
       {
         slug: "oauth-lab",
         name: "OAuth Lab",
-        size: "half",
+        size: "third",
         icon: "shield",
         accent: ["#eab308", "#f97316"],
         kind: "Interactive lab",

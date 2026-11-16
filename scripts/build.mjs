@@ -51,11 +51,16 @@ const THEMES = {
   },
 };
 
+// Cards are shown at their natural size: two halves or three thirds fill the
+// 846px profile column, and on a narrower screen they wrap, one per row,
+// instead of shrinking until the text is unreadable.
 const SIZES = {
-  wide: { w: 880, h: 188, descW: 520, descSize: 14, lineH: 20, lines: 3, percent: "100%" },
-  half: { w: 436, h: 188, descW: 392, descSize: 13.5, lineH: 19.5, lines: 3, percent: "49.5%" },
-  third: { w: 288, h: 216, descW: 244, descSize: 13, lineH: 18, lines: 4, percent: "32.8%" },
+  half: { w: 418, h: 188, descW: 374, descSize: 13.5, lineH: 19.5, lines: 3 },
+  third: { w: 276, h: 224, descW: 232, descSize: 13, lineH: 18, lines: 5 },
 };
+
+// Transparent band above and below each card, so wrapped rows never touch.
+const GAP = 3;
 
 const STATUS = { live: "live", active: "active", soon: "coming soon" };
 
@@ -191,47 +196,6 @@ function chipRow(chips, x, y, maxRight, t) {
   return out;
 }
 
-// Right-hand illustration of the wide cards.
-const ART = {
-  card(t, [a, b]) {
-    const qr = [];
-    const cells = ["111.1.1", "1.1.111", "111..1.", "..1.1.1", "1.111..", "11..1.1", "1.1.111"];
-    cells.forEach((row, r) =>
-      [...row].forEach((c, i) => {
-        if (c === "1") qr.push(`<rect x="${164 + i * 7}" y="${62 + r * 7}" width="6" height="6" rx="1.5"/>`);
-      }),
-    );
-    return `<g transform="translate(626 22) rotate(-5 116 72)">
-  <rect x="14" y="20" width="232" height="132" rx="14" fill="${a}" opacity=".16"/>
-  <rect width="232" height="132" rx="14" fill="${t.cardTop}" stroke="${t.border}"/>
-  <rect width="232" height="6" rx="3" fill="url(#accent)"/>
-  <circle cx="38" cy="46" r="16" fill="url(#accent)"/>
-  <rect x="64" y="34" width="72" height="9" rx="4.5" fill="${t.title}" opacity=".85"/>
-  <rect x="64" y="50" width="48" height="7" rx="3.5" fill="${t.muted}" opacity=".6"/>
-  <rect x="22" y="82" width="104" height="7" rx="3.5" fill="${t.muted}" opacity=".45"/>
-  <rect x="22" y="96" width="84" height="7" rx="3.5" fill="${t.muted}" opacity=".45"/>
-  <rect x="22" y="110" width="60" height="7" rx="3.5" fill="${b}" opacity=".8"/>
-  <g fill="${t.title}" opacity=".85">${qr.join("")}</g>
-</g>`;
-  },
-  code(t, [a, b]) {
-    const line = (y, parts) =>
-      `<text x="18" y="${y}" xml:space="preserve" font-family="${MONO}" font-size="12">${parts
-        .map(([text, fill]) => `<tspan fill="${fill}">${esc(text)}</tspan>`)
-        .join("")}</text>`;
-    return `<g transform="translate(622 24)">
-  <rect width="236" height="140" rx="12" fill="${t.cardTop}" stroke="${t.border}"/>
-  <circle cx="18" cy="16" r="4" fill="${t.muted}" opacity=".5"/><circle cx="32" cy="16" r="4" fill="${t.muted}" opacity=".5"/><circle cx="46" cy="16" r="4" fill="${t.muted}" opacity=".5"/>
-  <path d="M0 30h236" stroke="${t.border}"/>
-  ${line(52, [["jq ", a], ["'.[] | select(", t.title]])}
-  ${line(70, [["   .stars > 50", b], [")'", t.title]])}
-  ${line(88, [["  repos.json", t.muted]])}
-  <path d="M0 100h236" stroke="${t.border}"/>
-  ${line(122, [["{ ", t.muted], ['"name"', a], [": ", t.muted], ['"jq…"', t.live], [" }", t.muted]])}
-</g>`;
-  },
-};
-
 function card(p, theme, metricText) {
   const t = THEMES[theme];
   const S = SIZES[p.size];
@@ -240,14 +204,14 @@ function card(p, theme, metricText) {
   const lines = wrap(p.description, S.descW, S.descSize, S.lines);
   const chipY = S.h - pad - 22;
   const metricW = metricText ? monoWidth(metricText, 11.5) + 12 : 0;
-  const rightLimit = (p.art ? pad + S.descW : S.w - pad) - metricW;
+  const rightLimit = S.w - pad - metricW;
   const statusText = STATUS[p.status];
   const statusColor = p.status === "soon" ? t.soon : t.live;
-  const statusX = p.art ? pad + S.descW : S.w - pad;
+  const statusX = S.w - pad;
   const dotX = statusX - monoWidth(statusText, 10.5) - 9;
-  const metricX = p.art ? pad + S.descW : S.w - pad;
+  const metricX = S.w - pad;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${S.w}" height="${S.h}" viewBox="0 0 ${S.w} ${S.h}" role="img" aria-label="${esc(`${p.name}: ${p.summary}`)}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${S.w}" height="${S.h + 2 * GAP}" viewBox="0 ${-GAP} ${S.w} ${S.h + 2 * GAP}" role="img" aria-label="${esc(`${p.name}: ${p.summary}`)}">
 <defs>
   <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${t.cardTop}"/><stop offset="1" stop-color="${t.cardBottom}"/></linearGradient>
   <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>
@@ -263,7 +227,6 @@ function card(p, theme, metricText) {
 <g clip-path="url(#clip)">
   <rect width="${S.w}" height="${S.h}" fill="url(#bg)"/>
   <rect width="${S.w}" height="${S.h}" fill="url(#glow)"/>
-  ${p.art ? ART[p.art](t, p.accent) : ""}
 </g>
 <rect x=".5" y=".5" width="${S.w - 1}" height="${S.h - 1}" rx="15.5" fill="none" stroke="url(#edge)"/>
 <rect x="${pad}" y="${pad}" width="44" height="44" rx="12" fill="url(#accent)"/>
@@ -282,15 +245,30 @@ ${metricText ? `<text x="${metricX}" y="${chipY + 15}" text-anchor="end" font-fa
 
 // --------------------------------------------------------------------- hero
 
-function heroSvg({ projectCount, installsText }) {
-  const W = 880;
-  const H = 272;
-  const size = 15;
-  const x0 = 62;
+const HERO = {
+  desktop: {
+    W: 880, H: 272, x: 40, place: [48, 12], name: [116, 62, -2], tag: [150, 18, 24, 800],
+    typed: [186, 15], rule: 208, stats: "inline",
+    blobs: [[690, 60, 130], [840, 210, 120], [520, 270, 100]],
+  },
+  // Served below 768px, where the desktop banner would be a third of its size.
+  mobile: {
+    W: 440, H: 286, x: 26, place: [40, 11.5], name: [94, 48, -1.5], tag: [126, 16.5, 23, 380],
+    typed: [192, 12], rule: 212, stats: "columns",
+    blobs: [[380, 30, 110], [450, 230, 100], [200, 300, 90]],
+  },
+};
+
+function heroSvg(layout, { projectCount, installsText }) {
+  const L = HERO[layout];
+  const { W, H, x } = L;
+  const [typedY, size] = L.typed;
+  const x0 = x + size * 1.5;
   const lines = hero.typed.map((l) => l.replace("{installs}", installsText));
   const n = lines.length;
   const slot = 4.5;
   const widths = lines.map((l) => monoWidth(l, size) + 4);
+  if (x0 + Math.max(...widths) > W - x / 2) throw new Error(`Hero (${layout}): a typed line does not fit`);
   const f = (v) => v.toFixed(4);
   const caretValues = [];
   const caretTimes = [];
@@ -308,8 +286,8 @@ function heroSvg({ projectCount, installsText }) {
           : [`0;0;${w};${w};0;0`, [0, s - 0.3 / n, s, s + 0.6 / n, s + 0.7 / n, 1]];
       caretValues.push(x0 + widths[i], x0 + widths[i], x0);
       caretTimes.push(s, s + 0.6 / n, s + 0.7 / n);
-      return `<clipPath id="t${i}"><rect x="${x0}" y="168" height="26" width="${i === 0 ? w : 0}"><animate attributeName="width" dur="${n * slot}s" repeatCount="indefinite" values="${values}" keyTimes="${times.map(f).join(";")}"/></rect></clipPath>
-<text clip-path="url(#t${i})" x="${x0}" y="186" font-family="${MONO}" font-size="${size}" fill="#a5d8ff">${esc(l)}</text>`;
+      return `<clipPath id="t${i}"><rect x="${x0}" y="${typedY - size * 1.2}" height="${size * 1.8}" width="${i === 0 ? w : 0}"><animate attributeName="width" dur="${n * slot}s" repeatCount="indefinite" values="${values}" keyTimes="${times.map(f).join(";")}"/></rect></clipPath>
+<text clip-path="url(#t${i})" x="${x0}" y="${typedY}" font-family="${MONO}" font-size="${size}" fill="#a5d8ff">${esc(l)}</text>`;
     })
     .join("\n");
   caretValues.push(x0 + widths[0]);
@@ -320,16 +298,30 @@ function heroSvg({ projectCount, installsText }) {
     [`${installsText}+`, "VS Code installs"],
     [String(hero.since), "on GitHub since"],
   ];
-  let sx = 40;
+  const label = (lx, ly, text, fs) =>
+    `<text x="${lx.toFixed(1)}" y="${ly}" font-family="${MONO}" font-size="${fs}" letter-spacing=".6" fill="#fff" fill-opacity=".62">${esc(text.toUpperCase())}</text>`;
+  const value = (vx, vy, text, fs) =>
+    `<text x="${vx.toFixed(1)}" y="${vy}" font-family="${SANS}" font-size="${fs}" font-weight="700" fill="#fff">${esc(text)}</text>`;
+  let sx = x;
   const statsSvg = stats
-    .map(([value, label]) => {
-      const vw = sansWidth(value, 24);
-      const out = `<text x="${sx}" y="238" font-family="${SANS}" font-size="24" font-weight="700" fill="#fff">${esc(value)}</text>
-<text x="${(sx + vw + 9).toFixed(1)}" y="237" font-family="${MONO}" font-size="10.5" letter-spacing=".6" fill="#fff" fill-opacity=".62">${esc(label.toUpperCase())}</text>`;
-      sx += vw + 9 + monoWidth(label, 10.5) + label.length * 0.6 + 34;
+    .map(([v, l], i) => {
+      if (L.stats === "columns") {
+        const cx = x + (i * (W - 2 * x)) / 3;
+        return value(cx, L.rule + 34, v, 22) + label(cx, L.rule + 52, l, 9.5);
+      }
+      const vw = sansWidth(v, 24);
+      const out = value(sx, L.rule + 30, v, 24) + label(sx + vw + 9, L.rule + 29, l, 10.5);
+      sx += vw + 9 + monoWidth(l, 10.5) + l.length * 0.6 + 34;
       return out;
     })
     .join("\n");
+
+  const [tagY, tagSize, tagLineH, tagW] = L.tag;
+  const tagLines = wrap(hero.tagline, tagW, tagSize, 2);
+  const [placeY, placeSize] = L.place;
+  const [nameY, nameSize, nameSpacing] = L.name;
+  const dot = [x + 5, placeY - 4.5];
+  const blobColors = [["#4338ca", 0.85], ["#0ea5e9", 0.7], ["#c026d3", 0.5]];
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(`${hero.name}. ${hero.tagline}`)}">
 <defs>
@@ -349,30 +341,28 @@ function heroSvg({ projectCount, installsText }) {
   @keyframes drift { 0% { transform: translate(0, 0); } 50% { transform: translate(-46px, 22px); } 100% { transform: translate(34px, -18px); } }
   .caret { animation: blink 1s steps(2, start) infinite; }
   @keyframes blink { to { visibility: hidden; } }
-  .ring { animation: ring 2.4s ease-out infinite; transform-origin: 45px 43.5px; }
+  .ring { animation: ring 2.4s ease-out infinite; transform-origin: ${dot[0]}px ${dot[1]}px; }
   @keyframes ring { 0% { opacity: .5; transform: scale(1); } 100% { opacity: 0; transform: scale(3); } }
   @media (prefers-reduced-motion: reduce) { .b, .caret, .ring { animation: none; } }
 </style>
 <g clip-path="url(#frame)">
   <rect width="${W}" height="${H}" fill="url(#base)"/>
   <g filter="url(#blur)">
-    <circle class="b" cx="690" cy="60" r="130" fill="#4338ca" opacity=".85"/>
-    <circle class="b b2" cx="840" cy="210" r="120" fill="#0ea5e9" opacity=".7"/>
-    <circle class="b b3" cx="520" cy="270" r="100" fill="#c026d3" opacity=".5"/>
+${L.blobs.map(([cx, cy, r], i) => `    <circle class="b${i ? ` b${i + 1}` : ""}" cx="${cx}" cy="${cy}" r="${r}" fill="${blobColors[i][0]}" opacity="${blobColors[i][1]}"/>`).join("\n")}
   </g>
   <rect width="${W}" height="${H}" fill="url(#dots)" mask="url(#mask)"/>
   <rect width="${W}" height="${H}" fill="url(#fade)"/>
 </g>
 <rect x=".5" y=".5" width="${W - 1}" height="${H - 1}" rx="19.5" fill="none" stroke="#fff" stroke-opacity=".1"/>
-<circle class="ring" cx="45" cy="43.5" r="4" fill="#3fb950"/>
-<circle cx="45" cy="43.5" r="4" fill="#3fb950"/>
-<text x="58" y="48" font-family="${MONO}" font-size="12" letter-spacing=".3" fill="#fff" fill-opacity=".7">${esc(hero.place)}</text>
-<text x="38" y="116" font-family="${SANS}" font-size="62" font-weight="800" letter-spacing="-2" fill="url(#name)">${esc(hero.name)}</text>
-<text x="40" y="150" font-family="${SANS}" font-size="18" fill="#fff" fill-opacity=".8">${esc(hero.tagline)}</text>
-<text x="40" y="186" font-family="${MONO}" font-size="${size}" font-weight="700" fill="#38bdf8">❯</text>
+<circle class="ring" cx="${dot[0]}" cy="${dot[1]}" r="4" fill="#3fb950"/>
+<circle cx="${dot[0]}" cy="${dot[1]}" r="4" fill="#3fb950"/>
+<text x="${x + 18}" y="${placeY}" font-family="${MONO}" font-size="${placeSize}" letter-spacing=".3" fill="#fff" fill-opacity=".7">${esc(hero.place)}</text>
+<text x="${x - 2}" y="${nameY}" font-family="${SANS}" font-size="${nameSize}" font-weight="800" letter-spacing="${nameSpacing}" fill="url(#name)">${esc(hero.name)}</text>
+${tagLines.map((l, i) => `<text x="${x}" y="${tagY + i * tagLineH}" font-family="${SANS}" font-size="${tagSize}" fill="#fff" fill-opacity=".8">${esc(l)}</text>`).join("\n")}
+<text x="${x}" y="${typedY}" font-family="${MONO}" font-size="${size}" font-weight="700" fill="#38bdf8">❯</text>
 ${typed}
-<rect class="caret" x="${(x0 + widths[0]).toFixed(1)}" y="172" width="8" height="18" rx="1.5" fill="#a5d8ff"><animate attributeName="x" dur="${n * slot}s" repeatCount="indefinite" values="${caretValues.map((v) => v.toFixed(1)).join(";")}" keyTimes="${caretTimes.map(f).join(";")}"/></rect>
-<path d="M40 208h800" stroke="#fff" stroke-opacity=".1"/>
+<rect class="caret" x="${(x0 + widths[0]).toFixed(1)}" y="${typedY - size * 0.93}" width="${(size * 0.53).toFixed(1)}" height="${size * 1.2}" rx="1.5" fill="#a5d8ff"><animate attributeName="x" dur="${n * slot}s" repeatCount="indefinite" values="${caretValues.map((v) => v.toFixed(1)).join(";")}" keyTimes="${caretTimes.map(f).join(";")}"/></rect>
+<path d="M${x} ${L.rule}h${W - 2 * x}" stroke="#fff" stroke-opacity=".1"/>
 ${statsSvg}
 </svg>
 `;
@@ -395,39 +385,50 @@ function pillSvg(pill, theme) {
 `;
 }
 
-function stackSvg(theme) {
+// One tile per stack group, as wide as a half card: two per row, wrapping like the cards.
+const STACK_W = 418;
+
+function stackLayout(items) {
+  const pad = 16;
+  let x = pad;
+  let y = 44;
+  const chips = items.map((item) => {
+    const w = monoWidth(item, 11.5) + 20;
+    if (x + w > STACK_W - pad && x > pad) {
+      x = pad;
+      y += 33;
+    }
+    const chip = { item, x, y, w };
+    x += w + 6;
+    return chip;
+  });
+  return { chips, height: y + 27 + pad };
+}
+
+function stackSvg(index, theme, height) {
   const t = THEMES[theme];
-  const W = 880;
-  const rowH = 36;
-  const H = stack.length * rowH - 8;
-  const rows = stack
-    .map(([label, items], r) => {
-      const y = r * rowH;
-      let x = 124;
-      const chips = items
-        .map((item) => {
-          const w = monoWidth(item, 11.5) + 20;
-          const out = `<rect x="${x.toFixed(1)}" y="${y + 0.5}" width="${w.toFixed(1)}" height="27" rx="13.5" fill="${t.chipBg}" stroke="${t.border}"/>
-<text x="${(x + 10).toFixed(1)}" y="${y + 18}" font-family="${MONO}" font-size="11.5" fill="${t.chipText}">${esc(item)}</text>`;
-          x += w + 7;
-          return out;
-        })
-        .join("\n");
-      if (x > W) throw new Error(`Stack row "${label}" is ${Math.round(x)}px wide, ${W} fit`);
-      return `<text x="0" y="${y + 18}" font-family="${MONO}" font-size="10.5" letter-spacing=".8" fill="${t.muted}">${esc(label.toUpperCase())}</text>
-${chips}`;
-    })
-    .join("\n");
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(stack.map(([l, i]) => `${l}: ${i.join(", ")}`).join(". "))}">
-${rows}
+  const [label, items] = stack[index];
+  const { chips } = stackLayout(items);
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${STACK_W}" height="${height + 2 * GAP}" viewBox="0 ${-GAP} ${STACK_W} ${height + 2 * GAP}" role="img" aria-label="${esc(`${label}: ${items.join(", ")}`)}">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${t.cardTop}"/><stop offset="1" stop-color="${t.cardBottom}"/></linearGradient></defs>
+<rect x=".5" y=".5" width="${STACK_W - 1}" height="${height - 1}" rx="15.5" fill="url(#bg)" stroke="${t.border}"/>
+<text x="16" y="28" font-family="${MONO}" font-size="10.5" letter-spacing=".8" fill="${t.muted}">${esc(label.toUpperCase())}</text>
+${chips
+  .map(
+    (c) => `<rect x="${c.x.toFixed(1)}" y="${c.y + 0.5}" width="${c.w.toFixed(1)}" height="26" rx="13" fill="${t.chipBg}" stroke="${t.border}"/>
+<text x="${(c.x + 10).toFixed(1)}" y="${c.y + 17.5}" font-family="${MONO}" font-size="11.5" fill="${t.chipText}">${esc(c.item)}</text>`,
+  )
+  .join("\n")}
 </svg>
 `;
 }
 
 // ------------------------------------------------------------------- README
 
-const themed = (name, alt, attrs) =>
-  `<picture><source media="(prefers-color-scheme: dark)" srcset="${ASSETS}/${name}-dark.svg" /><img src="${ASSETS}/${name}-light.svg" alt="${esc(alt)}" ${attrs} /></picture>`;
+const themed = (name, alt) =>
+  `<picture><source media="(prefers-color-scheme: dark)" srcset="${ASSETS}/${name}-dark.svg" /><img src="${ASSETS}/${name}-light.svg" alt="${esc(alt)}" /></picture>`;
+
+const slugOf = (label) => label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 function linkList(p) {
   return Object.entries(p.links)
@@ -443,7 +444,7 @@ function readmeBlock() {
     out.push(`### ${section.title}`, "", `<sub>${section.intro}</sub>`, "", '<p align="center">');
     for (const p of section.projects) {
       out.push(
-        `  <a href="${p.url}">${themed(`card-${p.slug}`, `${p.name}: ${p.summary}`, `width="${SIZES[p.size].percent}"`)}</a>`,
+        `  <a href="${p.url}">${themed(`card-${p.slug}`, `${p.name}: ${p.summary}`)}</a>`,
       );
     }
     out.push("</p>", "");
@@ -457,15 +458,27 @@ function readmeBlock() {
   return out.join("\n");
 }
 
+function stackBlock() {
+  const out = ["### Stack", "", '<p align="center">'];
+  for (const [label, items] of stack) {
+    out.push(`  ${themed(`stack-${slugOf(label)}`, `${label}: ${items.join(", ")}`)}`);
+  }
+  out.push("</p>");
+  return out.join("\n");
+}
+
 async function updateReadme() {
   const path = join(ROOT, "README.md");
-  const readme = await readFile(path, "utf8");
-  const start = "<!-- projects:start -->";
-  const end = "<!-- projects:end -->";
-  const from = readme.indexOf(start);
-  const to = readme.indexOf(end);
-  if (from < 0 || to < 0) throw new Error(`README.md needs the ${start} and ${end} markers`);
-  await writeFile(path, `${readme.slice(0, from + start.length)}\n${readmeBlock()}\n${readme.slice(to)}`);
+  let readme = await readFile(path, "utf8");
+  for (const [name, block] of [["projects", readmeBlock()], ["stack", stackBlock()]]) {
+    const start = `<!-- ${name}:start -->`;
+    const end = `<!-- ${name}:end -->`;
+    const from = readme.indexOf(start);
+    const to = readme.indexOf(end);
+    if (from < 0 || to < 0) throw new Error(`README.md needs the ${start} and ${end} markers`);
+    readme = `${readme.slice(0, from + start.length)}\n${block}\n${readme.slice(to)}`;
+  }
+  await writeFile(path, readme);
   console.log("README.md updated");
 }
 
@@ -485,11 +498,14 @@ async function buildImages() {
   }
 
   const installsText = compact(await installs(hero.installs.installs, hero.installs.fallback));
-  save("hero.svg", heroSvg({ projectCount: projects.length, installsText }));
+  const heroData = { projectCount: projects.length, installsText };
+  save("hero.svg", heroSvg("desktop", heroData));
+  save("hero-mobile.svg", heroSvg("mobile", heroData));
 
+  const stackHeight = Math.max(...stack.map(([, items]) => stackLayout(items).height));
   for (const theme of Object.keys(THEMES)) {
     for (const pill of pills) save(`pill-${pill.slug}-${theme}.svg`, pillSvg(pill, theme));
-    save(`stack-${theme}.svg`, stackSvg(theme));
+    stack.forEach(([label], i) => save(`stack-${slugOf(label)}-${theme}.svg`, stackSvg(i, theme, stackHeight)));
   }
 
   await Promise.all(files);
