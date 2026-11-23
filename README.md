@@ -2,15 +2,15 @@
      The project cards and the stack come from scripts/data.mjs: edit it, then run `node scripts/build.mjs --readme`. -->
 
 <p align="center">
-  <a href="https://dambox.ch"><picture><source media="(max-width: 767px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/hero-mobile.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/hero.svg" alt="David Nussio. Software engineer in Lugano, Switzerland. Products at dambox, developer tools in the open." width="100%" /></picture></a>
+  <a href="https://dambox.ch"><picture><source media="(max-width: 1011px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/hero-mobile.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/hero.svg" alt="David Nussio. Software engineer in Lugano, Switzerland. Products at dambox, developer tools in the open." width="100%" /></picture></a>
 </p>
 
 <p align="center">
-  <a href="https://bizcard.ch"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-bizcard-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-bizcard-light.svg" alt="bizcard.ch" height="30" /></picture></a>
-  <a href="https://dambox.ch"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-dambox-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-dambox-light.svg" alt="dambox.ch" height="30" /></picture></a>
-  <a href="https://x.com/davidnussio"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-x-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-x-light.svg" alt="@davidnussio on X" height="30" /></picture></a>
-  <a href="https://marketplace.visualstudio.com/publishers/davidnussio"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-marketplace-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-marketplace-light.svg" alt="VS Code Marketplace" height="30" /></picture></a>
-  <a href="https://www.npmjs.com/~davidnussio"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-npm-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-npm-light.svg" alt="npm" height="30" /></picture></a>
+  <a href="https://bizcard.ch"><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-bizcard.svg" alt="bizcard.ch" height="30" /></a>
+  <a href="https://dambox.ch"><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-dambox.svg" alt="dambox.ch" height="30" /></a>
+  <a href="https://x.com/davidnussio"><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-x.svg" alt="@davidnussio on X" height="30" /></a>
+  <a href="https://marketplace.visualstudio.com/publishers/davidnussio"><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-marketplace.svg" alt="VS Code Marketplace" height="30" /></a>
+  <a href="https://www.npmjs.com/~davidnussio"><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/pill-npm.svg" alt="npm" height="30" /></a>
 </p>
 
 I'm David, a software engineer in Lugano. With **[dambox Sagl](https://dambox.ch)** I build **[bizCARD](https://bizcard.ch)** and a handful of apps for phone, TV and desktop. In the open I maintain developer tools around jq, secrets and Effect. Everything below is in active development.
@@ -21,11 +21,11 @@ I'm David, a software engineer in Lugano. With **[dambox Sagl](https://dambox.ch
 <sub>Built and run by <a href="https://dambox.ch">dambox Sagl</a>, in Ticino.</sub>
 
 <p align="center">
-  <a href="https://bizcard.ch"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-bizcard-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-bizcard-light.svg" alt="bizCARD: Digital business cards for teams" /></picture></a>
-  <a href="https://divano.dambox.ch"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-divano-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-divano-light.svg" alt="Divano: IPTV player for phone and Android TV" /></picture></a>
-  <a href="https://pace.dambox.ch"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-pace-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-pace-light.svg" alt="Pace: Running pace calculator" /></picture></a>
-  <a href="https://bus.oggi.ch"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-lugo-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-lugo-light.svg" alt="LuGo: Real-time bus departures in Lugano" /></picture></a>
-  <a href="https://web-croc.web.app"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-webcroc-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-webcroc-light.svg" alt="WebCroc: Peer-to-peer file transfer in the browser" /></picture></a>
+  <a href="https://bizcard.ch"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-bizcard-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-bizcard.svg" alt="bizCARD: Digital business cards for teams" /></picture></a>
+  <a href="https://divano.dambox.ch"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-divano-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-divano.svg" alt="Divano: IPTV player for phone and Android TV" /></picture></a>
+  <a href="https://pace.dambox.ch"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-pace-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-pace.svg" alt="Pace: Running pace calculator" /></picture></a>
+  <a href="https://bus.oggi.ch"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-lugo-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-lugo.svg" alt="LuGo: Real-time bus departures in Lugano" /></picture></a>
+  <a href="https://web-croc.web.app"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-webcroc-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-webcroc.svg" alt="WebCroc: Peer-to-peer file transfer in the browser" /></picture></a>
 </p>
 
 ### Desktop apps
@@ -33,9 +33,9 @@ I'm David, a software engineer in Lugano. With **[dambox Sagl](https://dambox.ch
 <sub>Native apps made with Bun and Electrobun.</sub>
 
 <p align="center">
-  <a href="https://ingombro.dambox.ch"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-ingombro-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-ingombro-light.svg" alt="Ingombro: Disk space analyzer for macOS" /></picture></a>
-  <a href="https://github.com/davidnussio/aitelier"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-aitelier-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-aitelier-light.svg" alt="AItelier: AI image studio with consistent styles" /></picture></a>
-  <a href="https://github.com/davidnussio/arkimind-releases"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-arkimind-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-arkimind-light.svg" alt="Arkimind: Smart AI document filing" /></picture></a>
+  <a href="https://ingombro.dambox.ch"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-ingombro-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-ingombro.svg" alt="Ingombro: Disk space analyzer for macOS" /></picture></a>
+  <a href="https://github.com/davidnussio/aitelier"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-aitelier-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-aitelier.svg" alt="AItelier: AI image studio with consistent styles" /></picture></a>
+  <a href="https://github.com/davidnussio/arkimind-releases"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-arkimind-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-arkimind.svg" alt="Arkimind: Smart AI document filing" /></picture></a>
 </p>
 
 ### Developer tools
@@ -43,11 +43,11 @@ I'm David, a software engineer in Lugano. With **[dambox Sagl](https://dambox.ch
 <sub>Open source, around jq, secrets and Effect.</sub>
 
 <p align="center">
-  <a href="https://jq.dambox.ch"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-jq-playground-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-jq-playground-light.svg" alt="jq Playground: jq notebook for VS Code" /></picture></a>
-  <a href="https://envsec.dev"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-envsec-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-envsec-light.svg" alt="envsec: Secrets in the OS keychain instead of .env files" /></picture></a>
-  <a href="https://github.com/davidnussio/lazyjq"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-lazyjq-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-lazyjq-light.svg" alt="lazyjq: Terminal UI to explore JSON with jq" /></picture></a>
-  <a href="https://effect-cqrs.dambox.ch"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-effect-cqrs-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-effect-cqrs-light.svg" alt="effect-cqrs: CQRS and event sourcing for Effect v4" /></picture></a>
-  <a href="https://davidnussio.github.io/oauth-simulator/"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-oauth-lab-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-oauth-lab-light.svg" alt="OAuth Lab: Interactive OAuth 2.0 and OpenID Connect simulator" /></picture></a>
+  <a href="https://jq.dambox.ch"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-jq-playground-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-jq-playground.svg" alt="jq Playground: jq notebook for VS Code" /></picture></a>
+  <a href="https://envsec.dev"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-envsec-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-envsec.svg" alt="envsec: Secrets in the OS keychain instead of .env files" /></picture></a>
+  <a href="https://github.com/davidnussio/lazyjq"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-lazyjq-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-lazyjq.svg" alt="lazyjq: Terminal UI to explore JSON with jq" /></picture></a>
+  <a href="https://effect-cqrs.dambox.ch"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-effect-cqrs-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-effect-cqrs.svg" alt="effect-cqrs: CQRS and event sourcing for Effect v4" /></picture></a>
+  <a href="https://davidnussio.github.io/oauth-simulator/"><picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-oauth-lab-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-oauth-lab.svg" alt="OAuth Lab: Interactive OAuth 2.0 and OpenID Connect simulator" /></picture></a>
 </p>
 
 <details>
@@ -94,10 +94,10 @@ I'm David, a software engineer in Lugano. With **[dambox Sagl](https://dambox.ch
 ### Stack
 
 <p align="center">
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-languages-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-languages-light.svg" alt="Languages: TypeScript, Kotlin, Rust, C++, Go, Lua, Bash" /></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-web-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-web-light.svg" alt="Web: Effect, Next.js, React, Tailwind, Vite, Bun, Node.js" /></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-data-infra-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-data-infra-light.svg" alt="Data &amp; infra: Postgres, SQLite, Redis, Docker, Kubernetes, Google Cloud, Azure, Vercel, GitHub Actions" /></picture>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-daily-drivers-dark.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-daily-drivers-light.svg" alt="Daily drivers: Neovim, fish, Ghostty, zellij, mise, jq, Claude Code" /></picture>
+  <picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-languages-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-languages.svg" alt="Languages: TypeScript, Kotlin, Rust, C++, Go, Lua, Bash" /></picture>
+  <picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-web-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-web.svg" alt="Web: Effect, Next.js, React, Tailwind, Vite, Bun, Node.js" /></picture>
+  <picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-data-infra-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-data-infra.svg" alt="Data &amp; infra: Postgres, SQLite, Redis, Docker, Kubernetes, Google Cloud, Azure, Vercel, GitHub Actions" /></picture>
+  <picture><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-daily-drivers-wide.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-daily-drivers.svg" alt="Daily drivers: Neovim, fish, Ghostty, zellij, mise, jq, Claude Code" /></picture>
 </p>
 <!-- stack:end -->
 

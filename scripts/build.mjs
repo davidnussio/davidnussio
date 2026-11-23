@@ -196,9 +196,24 @@ function chipRow(chips, x, y, maxRight, t) {
   return out;
 }
 
-function card(p, theme, metricText) {
-  const t = THEMES[theme];
-  const S = SIZES[p.size];
+// Light and dark live in the same file and the image picks one from the
+// reader's colour scheme. That keeps <picture> free for the width switch:
+// GitHub rewrites the media of themed sources, which would break it.
+const THEME_CSS =
+  ".dark { display: none; } @media (prefers-color-scheme: dark) { .light { display: none; } .dark { display: inline; } }";
+const themes = (draw) =>
+  Object.keys(THEMES)
+    .map((theme) => `<g class="${theme}">\n${draw(THEMES[theme], theme[0])}\n</g>`)
+    .join("\n");
+
+// Below 1280px the profile column is too narrow for two cards side by side,
+// so every card is served in the half layout at twice its size: the browser
+// scales it down to the column and it always fills the row.
+const WIDE = 2;
+
+function card(p, layout, metricText) {
+  const S = layout === "wide" ? SIZES.half : SIZES[p.size];
+  const zoom = layout === "wide" ? WIDE : 1;
   const [a, b] = p.accent;
   const pad = 22;
   const lines = wrap(p.description, S.descW, S.descSize, S.lines);
@@ -206,39 +221,46 @@ function card(p, theme, metricText) {
   const metricW = metricText ? monoWidth(metricText, 11.5) + 12 : 0;
   const rightLimit = S.w - pad - metricW;
   const statusText = STATUS[p.status];
-  const statusColor = p.status === "soon" ? t.soon : t.live;
   const statusX = S.w - pad;
   const dotX = statusX - monoWidth(statusText, 10.5) - 9;
-  const metricX = S.w - pad;
+  const H = S.h + 2 * GAP;
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${S.w}" height="${S.h + 2 * GAP}" viewBox="0 ${-GAP} ${S.w} ${S.h + 2 * GAP}" role="img" aria-label="${esc(`${p.name}: ${p.summary}`)}">
+  const draw = (t, k) => {
+    const statusColor = p.status === "soon" ? t.soon : t.live;
+    return `<defs>
+  <linearGradient id="${k}bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${t.cardTop}"/><stop offset="1" stop-color="${t.cardBottom}"/></linearGradient>
+  <linearGradient id="${k}edge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}" stop-opacity=".75"/><stop offset=".35" stop-color="${t.border}"/><stop offset="1" stop-color="${t.border}"/></linearGradient>
+  <radialGradient id="${k}glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(${S.w - 30} -10) scale(${Math.round(S.w * 0.55)} 190)"><stop offset="0" stop-color="${b}" stop-opacity="${t.glow}"/><stop offset="1" stop-color="${b}" stop-opacity="0"/></radialGradient>
+</defs>
+<g clip-path="url(#clip)">
+  <rect width="${S.w}" height="${S.h}" fill="url(#${k}bg)"/>
+  <rect width="${S.w}" height="${S.h}" fill="url(#${k}glow)"/>
+</g>
+<rect x=".5" y=".5" width="${S.w - 1}" height="${S.h - 1}" rx="15.5" fill="none" stroke="url(#${k}edge)"/>
+<text x="${pad + 58}" y="41" font-family="${SANS}" font-size="20" font-weight="700" fill="${t.title}">${esc(p.name)}</text>
+<text x="${pad + 58}" y="59" font-family="${MONO}" font-size="10.5" letter-spacing=".4" fill="${t.muted}">${esc(p.kind.toUpperCase())}</text>
+<circle class="pulse" cx="${dotX.toFixed(1)}" cy="35.5" r="3.5" fill="${statusColor}"/>
+<circle cx="${dotX.toFixed(1)}" cy="35.5" r="3.5" fill="${statusColor}"/>
+<text x="${statusX}" y="39" text-anchor="end" font-family="${MONO}" font-size="10.5" fill="${statusColor}">${statusText}</text>
+${lines.map((l, i) => `<text x="${pad}" y="${94 + i * S.lineH}" font-family="${SANS}" font-size="${S.descSize}" fill="${t.text}">${esc(l)}</text>`).join("\n")}
+${chipRow(p.chips, pad, chipY, rightLimit, t)}
+${metricText ? `<text x="${S.w - pad}" y="${chipY + 15}" text-anchor="end" font-family="${MONO}" font-size="11.5" font-weight="600" fill="${t.title}">${esc(metricText)}</text>` : ""}`;
+  };
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${S.w * zoom}" height="${H * zoom}" viewBox="0 ${-GAP} ${S.w} ${H}" role="img" aria-label="${esc(`${p.name}: ${p.summary}`)}">
 <defs>
-  <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${t.cardTop}"/><stop offset="1" stop-color="${t.cardBottom}"/></linearGradient>
   <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>
-  <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${a}" stop-opacity=".75"/><stop offset=".35" stop-color="${t.border}"/><stop offset="1" stop-color="${t.border}"/></linearGradient>
-  <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(${S.w - 30} -10) scale(${Math.round(S.w * 0.55)} 190)"><stop offset="0" stop-color="${b}" stop-opacity="${t.glow}"/><stop offset="1" stop-color="${b}" stop-opacity="0"/></radialGradient>
   <clipPath id="clip"><rect width="${S.w}" height="${S.h}" rx="16"/></clipPath>
 </defs>
 <style>
-  .pulse { animation: pulse 2.4s ease-in-out infinite; transform-origin: ${dotX}px 35.5px; }
+  ${THEME_CSS}
+  .pulse { animation: pulse 2.4s ease-in-out infinite; transform-origin: ${dotX.toFixed(1)}px 35.5px; }
   @keyframes pulse { 0%, 100% { opacity: .35; transform: scale(1); } 50% { opacity: 0; transform: scale(2.6); } }
   @media (prefers-reduced-motion: reduce) { .pulse { animation: none; } }
 </style>
-<g clip-path="url(#clip)">
-  <rect width="${S.w}" height="${S.h}" fill="url(#bg)"/>
-  <rect width="${S.w}" height="${S.h}" fill="url(#glow)"/>
-</g>
-<rect x=".5" y=".5" width="${S.w - 1}" height="${S.h - 1}" rx="15.5" fill="none" stroke="url(#edge)"/>
+${themes(draw)}
 <rect x="${pad}" y="${pad}" width="44" height="44" rx="12" fill="url(#accent)"/>
 <g transform="translate(${pad + 10} ${pad + 10})" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[p.icon]}</g>
-<text x="${pad + 58}" y="41" font-family="${SANS}" font-size="20" font-weight="700" fill="${t.title}">${esc(p.name)}</text>
-<text x="${pad + 58}" y="59" font-family="${MONO}" font-size="10.5" letter-spacing=".4" fill="${t.muted}">${esc(p.kind.toUpperCase())}</text>
-${`<circle class="pulse" cx="${dotX.toFixed(1)}" cy="35.5" r="3.5" fill="${statusColor}"/>
-<circle cx="${dotX.toFixed(1)}" cy="35.5" r="3.5" fill="${statusColor}"/>
-<text x="${statusX}" y="39" text-anchor="end" font-family="${MONO}" font-size="10.5" fill="${statusColor}">${statusText}</text>`}
-${lines.map((l, i) => `<text x="${pad}" y="${94 + i * S.lineH}" font-family="${SANS}" font-size="${S.descSize}" fill="${t.text}">${esc(l)}</text>`).join("\n")}
-${chipRow(p.chips, pad, chipY, rightLimit, t)}
-${metricText ? `<text x="${metricX}" y="${chipY + 15}" text-anchor="end" font-family="${MONO}" font-size="11.5" font-weight="600" fill="${t.title}">${esc(metricText)}</text>` : ""}
 </svg>
 `;
 }
@@ -251,7 +273,7 @@ const HERO = {
     typed: [186, 15], rule: 208, stats: "inline",
     blobs: [[690, 60, 130], [840, 210, 120], [520, 270, 100]],
   },
-  // Served below 768px, where the desktop banner would be a third of its size.
+  // Served below 1012px, where the profile column is at most 578px wide.
   mobile: {
     W: 440, H: 286, x: 26, place: [40, 11.5], name: [94, 48, -1.5], tag: [126, 16.5, 23, 380],
     typed: [192, 12], rule: 212, stats: "columns",
@@ -267,27 +289,34 @@ function heroSvg(layout, { projectCount, installsText }) {
   const lines = hero.typed.map((l) => l.replace("{installs}", installsText));
   const n = lines.length;
   const slot = 4.5;
-  const widths = lines.map((l) => monoWidth(l, size) + 4);
+  const widths = lines.map((l) => monoWidth(l, size) + 3);
   if (x0 + Math.max(...widths) > W - x / 2) throw new Error(`Hero (${layout}): a typed line does not fit`);
   const f = (v) => v.toFixed(4);
   const caretValues = [];
   const caretTimes = [];
 
-  // Line 0 is fully typed at t=0, so a renderer that shows only the first
-  // frame still gets a complete sentence. Each line holds, is erased, then
-  // the next one is typed in the tail of the same slot.
+  // Each character is its own <text> that switches on and off. An animated
+  // clipPath would be shorter, but Safari does not clip text with it and
+  // shows every line at once. Line 0 is fully typed at t=0, so a renderer
+  // that shows only the first frame still gets a complete sentence. A line
+  // holds, is erased from the end, then the next one is typed.
+  const advance = size * MONO_EM;
   const typed = lines
     .map((l, i) => {
       const s = i / n;
-      const w = widths[i].toFixed(1);
-      const [values, times] =
-        i === 0
-          ? [`${w};${w};0;0;${w}`, [0, 0.6 / n, 0.7 / n, 1 - 0.3 / n, 1]]
-          : [`0;0;${w};${w};0;0`, [0, s - 0.3 / n, s, s + 0.6 / n, s + 0.7 / n, 1]];
+      const typeStart = (i === 0 ? 1 : s) - 0.3 / n;
+      const chars = [...l];
       caretValues.push(x0 + widths[i], x0 + widths[i], x0);
       caretTimes.push(s, s + 0.6 / n, s + 0.7 / n);
-      return `<clipPath id="t${i}"><rect x="${x0}" y="${typedY - size * 1.2}" height="${size * 1.8}" width="${i === 0 ? w : 0}"><animate attributeName="width" dur="${n * slot}s" repeatCount="indefinite" values="${values}" keyTimes="${times.map(f).join(";")}"/></rect></clipPath>
-<text clip-path="url(#t${i})" x="${x0}" y="${typedY}" font-family="${MONO}" font-size="${size}" fill="#a5d8ff">${esc(l)}</text>`;
+      return chars
+        .map((c, j) => {
+          if (c === " ") return "";
+          const on = Math.min(typeStart + ((0.3 / n) * (j + 1)) / chars.length, 1);
+          const off = s + 0.6 / n + (0.1 / n) * (1 - j / chars.length);
+          const [values, times] = i === 0 ? ["1;0;1", [0, off, on]] : ["0;1;0", [0, on, off]];
+          return `<text x="${(x0 + j * advance).toFixed(1)}" y="${typedY}" opacity="${i === 0 ? 1 : 0}">${esc(c)}<animate attributeName="opacity" dur="${n * slot}s" repeatCount="indefinite" calcMode="discrete" values="${values}" keyTimes="${times.map(f).join(";")}"/></text>`;
+        })
+        .join("");
     })
     .join("\n");
   caretValues.push(x0 + widths[0]);
@@ -360,7 +389,9 @@ ${L.blobs.map(([cx, cy, r], i) => `    <circle class="b${i ? ` b${i + 1}` : ""}"
 <text x="${x - 2}" y="${nameY}" font-family="${SANS}" font-size="${nameSize}" font-weight="800" letter-spacing="${nameSpacing}" fill="url(#name)">${esc(hero.name)}</text>
 ${tagLines.map((l, i) => `<text x="${x}" y="${tagY + i * tagLineH}" font-family="${SANS}" font-size="${tagSize}" fill="#fff" fill-opacity=".8">${esc(l)}</text>`).join("\n")}
 <text x="${x}" y="${typedY}" font-family="${MONO}" font-size="${size}" font-weight="700" fill="#38bdf8">❯</text>
+<g font-family="${MONO}" font-size="${size}" fill="#a5d8ff">
 ${typed}
+</g>
 <rect class="caret" x="${(x0 + widths[0]).toFixed(1)}" y="${typedY - size * 0.93}" width="${(size * 0.53).toFixed(1)}" height="${size * 1.2}" rx="1.5" fill="#a5d8ff"><animate attributeName="x" dur="${n * slot}s" repeatCount="indefinite" values="${caretValues.map((v) => v.toFixed(1)).join(";")}" keyTimes="${caretTimes.map(f).join(";")}"/></rect>
 <path d="M${x} ${L.rule}h${W - 2 * x}" stroke="#fff" stroke-opacity=".1"/>
 ${statsSvg}
@@ -370,22 +401,22 @@ ${statsSvg}
 
 // ------------------------------------------------------------ pills & stack
 
-function pillSvg(pill, theme) {
-  const t = THEMES[theme];
+function pillSvg(pill) {
   const size = 12;
   const label = `${pill.label} ↗`;
   const w = Math.round(monoWidth(label, size) + 28);
-  const fill = pill.primary ? "url(#accent)" : t.chipBg;
-  const color = pill.primary ? "#fff" : t.chipText;
+  const draw = (t) => `<rect x=".5" y=".5" width="${w - 1}" height="29" rx="14.5" fill="${pill.primary ? "url(#accent)" : t.chipBg}" stroke="${pill.primary ? "none" : t.border}"/>
+<text x="${w / 2}" y="19.5" text-anchor="middle" font-family="${MONO}" font-size="${size}" font-weight="600" fill="${pill.primary ? "#fff" : t.chipText}">${esc(label)}</text>`;
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="30" viewBox="0 0 ${w} 30" role="img" aria-label="${esc(pill.label)}">
 <defs><linearGradient id="accent" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2f6feb"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
-<rect x=".5" y=".5" width="${w - 1}" height="29" rx="14.5" fill="${fill}" stroke="${pill.primary ? "none" : t.border}"/>
-<text x="${w / 2}" y="19.5" text-anchor="middle" font-family="${MONO}" font-size="${size}" font-weight="600" fill="${color}">${esc(label)}</text>
+<style>${THEME_CSS}</style>
+${themes(draw)}
 </svg>
 `;
 }
 
-// One tile per stack group, as wide as a half card: two per row, wrapping like the cards.
+// One tile per stack group, as wide as a half card: two per row on a wide
+// screen, one per row (served at twice the size) on a narrow one.
 const STACK_W = 418;
 
 function stackLayout(items) {
@@ -405,28 +436,33 @@ function stackLayout(items) {
   return { chips, height: y + 27 + pad };
 }
 
-function stackSvg(index, theme, height) {
-  const t = THEMES[theme];
+function stackSvg(index, layout, height) {
   const [label, items] = stack[index];
   const { chips } = stackLayout(items);
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${STACK_W}" height="${height + 2 * GAP}" viewBox="0 ${-GAP} ${STACK_W} ${height + 2 * GAP}" role="img" aria-label="${esc(`${label}: ${items.join(", ")}`)}">
-<defs><linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${t.cardTop}"/><stop offset="1" stop-color="${t.cardBottom}"/></linearGradient></defs>
-<rect x=".5" y=".5" width="${STACK_W - 1}" height="${height - 1}" rx="15.5" fill="url(#bg)" stroke="${t.border}"/>
+  const zoom = layout === "wide" ? WIDE : 1;
+  const H = height + 2 * GAP;
+  const draw = (t, k) => `<defs><linearGradient id="${k}bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${t.cardTop}"/><stop offset="1" stop-color="${t.cardBottom}"/></linearGradient></defs>
+<rect x=".5" y=".5" width="${STACK_W - 1}" height="${height - 1}" rx="15.5" fill="url(#${k}bg)" stroke="${t.border}"/>
 <text x="16" y="28" font-family="${MONO}" font-size="10.5" letter-spacing=".8" fill="${t.muted}">${esc(label.toUpperCase())}</text>
 ${chips
   .map(
     (c) => `<rect x="${c.x.toFixed(1)}" y="${c.y + 0.5}" width="${c.w.toFixed(1)}" height="26" rx="13" fill="${t.chipBg}" stroke="${t.border}"/>
 <text x="${(c.x + 10).toFixed(1)}" y="${c.y + 17.5}" font-family="${MONO}" font-size="11.5" fill="${t.chipText}">${esc(c.item)}</text>`,
   )
-  .join("\n")}
+  .join("\n")}`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${STACK_W * zoom}" height="${H * zoom}" viewBox="0 ${-GAP} ${STACK_W} ${H}" role="img" aria-label="${esc(`${label}: ${items.join(", ")}`)}">
+<style>${THEME_CSS}</style>
+${themes(draw)}
 </svg>
 `;
 }
 
 // ------------------------------------------------------------------- README
 
-const themed = (name, alt) =>
-  `<picture><source media="(prefers-color-scheme: dark)" srcset="${ASSETS}/${name}-dark.svg" /><img src="${ASSETS}/${name}-light.svg" alt="${esc(alt)}" /></picture>`;
+// Narrow column: the wide variant. GitHub's profile column reaches its full
+// 846px only from a 1280px viewport.
+const responsive = (name, alt) =>
+  `<picture><source media="(max-width: 1279px)" srcset="${ASSETS}/${name}-wide.svg" /><img src="${ASSETS}/${name}.svg" alt="${esc(alt)}" /></picture>`;
 
 const slugOf = (label) => label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
@@ -444,7 +480,7 @@ function readmeBlock() {
     out.push(`### ${section.title}`, "", `<sub>${section.intro}</sub>`, "", '<p align="center">');
     for (const p of section.projects) {
       out.push(
-        `  <a href="${p.url}">${themed(`card-${p.slug}`, `${p.name}: ${p.summary}`)}</a>`,
+        `  <a href="${p.url}">${responsive(`card-${p.slug}`, `${p.name}: ${p.summary}`)}</a>`,
       );
     }
     out.push("</p>", "");
@@ -461,7 +497,7 @@ function readmeBlock() {
 function stackBlock() {
   const out = ["### Stack", "", '<p align="center">'];
   for (const [label, items] of stack) {
-    out.push(`  ${themed(`stack-${slugOf(label)}`, `${label}: ${items.join(", ")}`)}`);
+    out.push(`  ${responsive(`stack-${slugOf(label)}`, `${label}: ${items.join(", ")}`)}`);
   }
   out.push("</p>");
   return out.join("\n");
@@ -490,10 +526,11 @@ async function buildImages() {
   const save = (name, svg) => files.push(writeFile(join(OUT, name), svg));
 
   const projects = sections.flatMap((s) => s.projects);
+  const layouts = { "": "natural", "-wide": "wide" };
   for (const p of projects) {
-    const parts = (await Promise.all(p.metrics.map(metric))).filter(Boolean);
-    for (const theme of Object.keys(THEMES)) {
-      save(`card-${p.slug}-${theme}.svg`, card(p, theme, parts.join(" · ")));
+    const text = (await Promise.all(p.metrics.map(metric))).filter(Boolean).join(" · ");
+    for (const [suffix, layout] of Object.entries(layouts)) {
+      save(`card-${p.slug}${suffix}.svg`, card(p, layout, text));
     }
   }
 
@@ -502,11 +539,13 @@ async function buildImages() {
   save("hero.svg", heroSvg("desktop", heroData));
   save("hero-mobile.svg", heroSvg("mobile", heroData));
 
+  for (const pill of pills) save(`pill-${pill.slug}.svg`, pillSvg(pill));
   const stackHeight = Math.max(...stack.map(([, items]) => stackLayout(items).height));
-  for (const theme of Object.keys(THEMES)) {
-    for (const pill of pills) save(`pill-${pill.slug}-${theme}.svg`, pillSvg(pill, theme));
-    stack.forEach(([label], i) => save(`stack-${slugOf(label)}-${theme}.svg`, stackSvg(i, theme, stackHeight)));
-  }
+  stack.forEach(([label], i) => {
+    for (const [suffix, layout] of Object.entries(layouts)) {
+      save(`stack-${slugOf(label)}${suffix}.svg`, stackSvg(i, layout, stackHeight));
+    }
+  });
 
   await Promise.all(files);
   console.log(`${files.length} images written to ${OUT}`);
