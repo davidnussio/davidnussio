@@ -57,6 +57,8 @@ const THEMES = {
 const SIZES = {
   half: { w: 418, h: 188, descW: 374, descSize: 13.5, lineH: 19.5, lines: 3 },
   third: { w: 276, h: 224, descW: 232, descSize: 13, lineH: 18, lines: 5 },
+  // Full-width and low, for the 578-845px column of a 1012-1279px window.
+  row: { w: 700, h: 170, descW: 656, descSize: 13.5, lineH: 19.5, lines: 2 },
 };
 
 // Transparent band above and below each card, so wrapped rows never touch.
@@ -207,13 +209,16 @@ const themes = (draw) =>
     .join("\n");
 
 // Below 1280px the profile column is too narrow for two cards side by side,
-// so every card is served in the half layout at twice its size: the browser
-// scales it down to the column and it always fills the row.
+// so every card is served alone on its row, drawn at twice its size: the
+// browser scales it down to the column and it always fills the row. Up to
+// 1011px (column up to 580px) it uses the half layout, above that the row one.
 const WIDE = 2;
+const LAYOUTS = { "": "natural", "-wide": "wide", "-row": "row" };
+const LAYOUT_SIZE = { wide: "half", row: "row" };
 
 function card(p, layout, metricText) {
-  const S = layout === "wide" ? SIZES.half : SIZES[p.size];
-  const zoom = layout === "wide" ? WIDE : 1;
+  const S = SIZES[LAYOUT_SIZE[layout] ?? p.size];
+  const zoom = layout === "natural" ? 1 : WIDE;
   const [a, b] = p.accent;
   const pad = 22;
   const lines = wrap(p.description, S.descW, S.descSize, S.lines);
@@ -415,17 +420,16 @@ ${themes(draw)}
 `;
 }
 
-// One tile per stack group, as wide as a half card: two per row on a wide
-// screen, one per row (served at twice the size) on a narrow one.
-const STACK_W = 418;
+// One tile per stack group, in the same widths as the cards.
+const stackWidth = (layout) => SIZES[LAYOUT_SIZE[layout] ?? "half"].w;
 
-function stackLayout(items) {
+function stackLayout(items, width) {
   const pad = 16;
   let x = pad;
   let y = 44;
   const chips = items.map((item) => {
     const w = monoWidth(item, 11.5) + 20;
-    if (x + w > STACK_W - pad && x > pad) {
+    if (x + w > width - pad && x > pad) {
       x = pad;
       y += 33;
     }
@@ -438,8 +442,9 @@ function stackLayout(items) {
 
 function stackSvg(index, layout, height) {
   const [label, items] = stack[index];
-  const { chips } = stackLayout(items);
-  const zoom = layout === "wide" ? WIDE : 1;
+  const STACK_W = stackWidth(layout);
+  const { chips } = stackLayout(items, STACK_W);
+  const zoom = layout === "natural" ? 1 : WIDE;
   const H = height + 2 * GAP;
   const draw = (t, k) => `<defs><linearGradient id="${k}bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${t.cardTop}"/><stop offset="1" stop-color="${t.cardBottom}"/></linearGradient></defs>
 <rect x=".5" y=".5" width="${STACK_W - 1}" height="${height - 1}" rx="15.5" fill="url(#${k}bg)" stroke="${t.border}"/>
@@ -459,10 +464,10 @@ ${themes(draw)}
 
 // ------------------------------------------------------------------- README
 
-// Narrow column: the wide variant. GitHub's profile column reaches its full
-// 846px only from a 1280px viewport.
+// GitHub's profile column reaches its full 846px only from a 1280px viewport:
+// below that, one card per row, in the layout that suits the column.
 const responsive = (name, alt) =>
-  `<picture><source media="(max-width: 1279px)" srcset="${ASSETS}/${name}-wide.svg" /><img src="${ASSETS}/${name}.svg" alt="${esc(alt)}" /></picture>`;
+  `<picture><source media="(max-width: 1011px)" srcset="${ASSETS}/${name}-wide.svg" /><source media="(max-width: 1279px)" srcset="${ASSETS}/${name}-row.svg" /><img src="${ASSETS}/${name}.svg" alt="${esc(alt)}" /></picture>`;
 
 const slugOf = (label) => label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
@@ -526,10 +531,9 @@ async function buildImages() {
   const save = (name, svg) => files.push(writeFile(join(OUT, name), svg));
 
   const projects = sections.flatMap((s) => s.projects);
-  const layouts = { "": "natural", "-wide": "wide" };
   for (const p of projects) {
     const text = (await Promise.all(p.metrics.map(metric))).filter(Boolean).join(" · ");
-    for (const [suffix, layout] of Object.entries(layouts)) {
+    for (const [suffix, layout] of Object.entries(LAYOUTS)) {
       save(`card-${p.slug}${suffix}.svg`, card(p, layout, text));
     }
   }
@@ -540,12 +544,10 @@ async function buildImages() {
   save("hero-mobile.svg", heroSvg("mobile", heroData));
 
   for (const pill of pills) save(`pill-${pill.slug}.svg`, pillSvg(pill));
-  const stackHeight = Math.max(...stack.map(([, items]) => stackLayout(items).height));
-  stack.forEach(([label], i) => {
-    for (const [suffix, layout] of Object.entries(layouts)) {
-      save(`stack-${slugOf(label)}${suffix}.svg`, stackSvg(i, layout, stackHeight));
-    }
-  });
+  for (const [suffix, layout] of Object.entries(LAYOUTS)) {
+    const height = Math.max(...stack.map(([, items]) => stackLayout(items, stackWidth(layout)).height));
+    stack.forEach(([label], i) => save(`stack-${slugOf(label)}${suffix}.svg`, stackSvg(i, layout, height)));
+  }
 
   await Promise.all(files);
   console.log(`${files.length} images written to ${OUT}`);
