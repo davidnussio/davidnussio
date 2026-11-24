@@ -64,10 +64,13 @@ export const sections = [
         description:
           "Running pace for the track: rep tables from 100 m to the marathon, splits every 400 m and training paces from a recent race. Offline, no account.",
         chips: ["Kotlin"],
-        status: "soon",
-        metrics: [{ text: "1.0 RC" }],
+        status: "live",
+        metrics: [{ text: "Google Play" }],
         url: "https://pace.dambox.ch",
-        links: { site: "https://pace.dambox.ch" },
+        links: {
+          site: "https://pace.dambox.ch",
+          "Google Play": "https://play.google.com/store/apps/details?id=com.davidnussio.pace",
+        },
       },
       {
         slug: "lugo",
@@ -105,12 +108,32 @@ export const sections = [
   },
   {
     title: "Desktop apps",
-    intro: "Native apps made with Bun and Electrobun.",
+    intro: "Native apps for the Mac, made with Tauri, Bun and Electrobun.",
     projects: [
+      {
+        slug: "granello",
+        name: "Granello",
+        size: "half",
+        icon: "mic",
+        accent: ["#eab308", "#84cc16"],
+        kind: "macOS · Apple Silicon",
+        summary: "Meeting notes with local transcription",
+        description:
+          "Meeting notes for the Mac: jot a few lines, Granello transcribes on your Mac with whisper.cpp and AI merges notes and transcript. No bot joins the call.",
+        chips: ["Tauri", "Rust", "React"],
+        status: "active",
+        metrics: [{ release: "granello", fallback: "v0.2.6" }],
+        url: "https://granello.dambox.ch",
+        links: {
+          site: "https://granello.dambox.ch",
+          repo: "granello",
+          Homebrew: "https://github.com/davidnussio/homebrew-tap",
+        },
+      },
       {
         slug: "ingombro",
         name: "Ingombro",
-        size: "third",
+        size: "half",
         icon: "treemap",
         accent: ["#06b6d4", "#3b82f6"],
         kind: "macOS · TUI · CLI",
@@ -126,7 +149,7 @@ export const sections = [
       {
         slug: "aitelier",
         name: "AItelier",
-        size: "third",
+        size: "half",
         icon: "image",
         accent: ["#ec4899", "#fb923c"],
         kind: "macOS",
@@ -142,7 +165,7 @@ export const sections = [
       {
         slug: "arkimind",
         name: "Arkimind",
-        size: "third",
+        size: "half",
         icon: "archive",
         accent: ["#6366f1", "#a78bfa"],
         kind: "Desktop app",
@@ -295,7 +318,7 @@ export const pills = [
 
 export const stack = [
   ["Languages", ["TypeScript", "Kotlin", "Rust", "C++", "Go", "Lua", "Bash"]],
-  ["Web", ["Effect", "Next.js", "React", "Tailwind", "Vite", "Bun", "Node.js"]],
+  ["Web", ["Effect", "Next.js", "React", "Tailwind", "Vite", "Bun", "Node.js", "Tauri"]],
   ["Data & infra", ["Postgres", "SQLite", "Redis", "Docker", "Kubernetes", "Google Cloud", "Azure", "Vercel", "GitHub Actions"]],
   ["Daily drivers", ["Neovim", "fish", "Ghostty", "zellij", "mise", "jq", "Claude Code"]],
 ];

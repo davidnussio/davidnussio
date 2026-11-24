@@ -30,9 +30,10 @@ I'm David, a software engineer in Lugano. With **[dambox Sagl](https://dambox.ch
 
 ### Desktop apps
 
-<sub>Native apps made with Bun and Electrobun.</sub>
+<sub>Native apps for the Mac, made with Tauri, Bun and Electrobun.</sub>
 
 <p align="center">
+  <a href="https://granello.dambox.ch"><picture><source media="(max-width: 1011px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-granello-wide.svg" /><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-granello-row.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-granello.svg" alt="Granello: Meeting notes with local transcription" /></picture></a>
   <a href="https://ingombro.dambox.ch"><picture><source media="(max-width: 1011px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-ingombro-wide.svg" /><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-ingombro-row.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-ingombro.svg" alt="Ingombro: Disk space analyzer for macOS" /></picture></a>
   <a href="https://github.com/davidnussio/aitelier"><picture><source media="(max-width: 1011px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-aitelier-wide.svg" /><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-aitelier-row.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-aitelier.svg" alt="AItelier: AI image studio with consistent styles" /></picture></a>
   <a href="https://github.com/davidnussio/arkimind-releases"><picture><source media="(max-width: 1011px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-arkimind-wide.svg" /><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-arkimind-row.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/card-arkimind.svg" alt="Arkimind: Smart AI document filing" /></picture></a>
@@ -58,9 +59,10 @@ I'm David, a software engineer in Lugano. With **[dambox Sagl](https://dambox.ch
 | --- | --- | --- |
 | **bizCARD** | Digital business cards for teams | [site](https://bizcard.ch) |
 | **Divano** | IPTV player for phone and Android TV | [site](https://divano.dambox.ch) · [Google Play](https://play.google.com/store/apps/details?id=ch.dambox.divano) |
-| **Pace** | Running pace calculator | [site](https://pace.dambox.ch) |
+| **Pace** | Running pace calculator | [site](https://pace.dambox.ch) · [Google Play](https://play.google.com/store/apps/details?id=com.davidnussio.pace) |
 | **LuGo** | Real-time bus departures in Lugano | [site](https://bus.oggi.ch) · [repo](https://github.com/davidnussio/lugano-timetable) |
 | **WebCroc** | Peer-to-peer file transfer in the browser | [site](https://web-croc.web.app) |
+| **Granello** | Meeting notes with local transcription | [site](https://granello.dambox.ch) · [repo](https://github.com/davidnussio/granello) · [Homebrew](https://github.com/davidnussio/homebrew-tap) |
 | **Ingombro** | Disk space analyzer for macOS | [site](https://ingombro.dambox.ch) · [repo](https://github.com/davidnussio/ingombro) |
 | **AItelier** | AI image studio with consistent styles | [repo](https://github.com/davidnussio/aitelier) |
 | **Arkimind** | Smart AI document filing | [releases](https://github.com/davidnussio/arkimind-releases) |
@@ -95,7 +97,7 @@ I'm David, a software engineer in Lugano. With **[dambox Sagl](https://dambox.ch
 
 <p align="center">
   <picture><source media="(max-width: 1011px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-languages-wide.svg" /><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-languages-row.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-languages.svg" alt="Languages: TypeScript, Kotlin, Rust, C++, Go, Lua, Bash" /></picture>
-  <picture><source media="(max-width: 1011px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-web-wide.svg" /><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-web-row.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-web.svg" alt="Web: Effect, Next.js, React, Tailwind, Vite, Bun, Node.js" /></picture>
+  <picture><source media="(max-width: 1011px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-web-wide.svg" /><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-web-row.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-web.svg" alt="Web: Effect, Next.js, React, Tailwind, Vite, Bun, Node.js, Tauri" /></picture>
   <picture><source media="(max-width: 1011px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-data-infra-wide.svg" /><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-data-infra-row.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-data-infra.svg" alt="Data &amp; infra: Postgres, SQLite, Redis, Docker, Kubernetes, Google Cloud, Azure, Vercel, GitHub Actions" /></picture>
   <picture><source media="(max-width: 1011px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-daily-drivers-wide.svg" /><source media="(max-width: 1279px)" srcset="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-daily-drivers-row.svg" /><img src="https://raw.githubusercontent.com/davidnussio/davidnussio/output/stack-daily-drivers.svg" alt="Daily drivers: Neovim, fish, Ghostty, zellij, mise, jq, Claude Code" /></picture>
 </p>
