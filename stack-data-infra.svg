@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="418" height="126" viewBox="0 -3 418 126" role="img" aria-label="Data &amp; infra: Postgres, SQLite, Redis, Docker, Kubernetes, Google Cloud, Azure, Vercel, GitHub Actions">
+<style>.dark { display: none; } @media (prefers-color-scheme: dark) { .light { display: none; } .dark { display: inline; } }</style>
+<g class="dark">
+<defs><linearGradient id="dbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#171c24"/><stop offset="1" stop-color="#0d1117"/></linearGradient></defs>
+<rect x=".5" y=".5" width="417" height="119" rx="15.5" fill="url(#dbg)" stroke="#30363d"/>
+<text x="16" y="28" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10.5" letter-spacing=".8" fill="#7d8590">DATA &amp; INFRA</text>
+<rect x="16.0" y="44.5" width="75.4" height="26" rx="13" fill="#21262d" stroke="#30363d"/>
+<text x="26.0" y="61.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#c9d1d9">Postgres</text>
+<rect x="97.4" y="44.5" width="61.5" height="26" rx="13" fill="#21262d" stroke="#30363d"/>
+<text x="107.4" y="61.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#c9d1d9">SQLite</text>
+<rect x="164.9" y="44.5" width="54.6" height="26" rx="13" fill="#21262d" stroke="#30363d"/>
+<text x="174.9" y="61.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#c9d1d9">Redis</text>
+<rect x="225.5" y="44.5" width="61.5" height="26" rx="13" fill="#21262d" stroke="#30363d"/>
+<text x="235.5" y="61.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#c9d1d9">Docker</text>
+<rect x="293.1" y="44.5" width="89.2" height="26" rx="13" fill="#21262d" stroke="#30363d"/>
+<text x="303.1" y="61.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#c9d1d9">Kubernetes</text>
+<rect x="16.0" y="77.5" width="103.1" height="26" rx="13" fill="#21262d" stroke="#30363d"/>
+<text x="26.0" y="94.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#c9d1d9">Google Cloud</text>
+<rect x="125.1" y="77.5" width="54.6" height="26" rx="13" fill="#21262d" stroke="#30363d"/>
+<text x="135.1" y="94.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#c9d1d9">Azure</text>
+<rect x="185.7" y="77.5" width="61.5" height="26" rx="13" fill="#21262d" stroke="#30363d"/>
+<text x="195.7" y="94.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#c9d1d9">Vercel</text>
+<rect x="253.2" y="77.5" width="116.9" height="26" rx="13" fill="#21262d" stroke="#30363d"/>
+<text x="263.2" y="94.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#c9d1d9">GitHub Actions</text>
+</g>
+<g class="light">
+<defs><linearGradient id="lbg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f6f8fa"/></linearGradient></defs>
+<rect x=".5" y=".5" width="417" height="119" rx="15.5" fill="url(#lbg)" stroke="#d1d9e0"/>
+<text x="16" y="28" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="10.5" letter-spacing=".8" fill="#6e7781">DATA &amp; INFRA</text>
+<rect x="16.0" y="44.5" width="75.4" height="26" rx="13" fill="#eaeef2" stroke="#d1d9e0"/>
+<text x="26.0" y="61.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#424a53">Postgres</text>
+<rect x="97.4" y="44.5" width="61.5" height="26" rx="13" fill="#eaeef2" stroke="#d1d9e0"/>
+<text x="107.4" y="61.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#424a53">SQLite</text>
+<rect x="164.9" y="44.5" width="54.6" height="26" rx="13" fill="#eaeef2" stroke="#d1d9e0"/>
+<text x="174.9" y="61.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#424a53">Redis</text>
+<rect x="225.5" y="44.5" width="61.5" height="26" rx="13" fill="#eaeef2" stroke="#d1d9e0"/>
+<text x="235.5" y="61.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#424a53">Docker</text>
+<rect x="293.1" y="44.5" width="89.2" height="26" rx="13" fill="#eaeef2" stroke="#d1d9e0"/>
+<text x="303.1" y="61.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#424a53">Kubernetes</text>
+<rect x="16.0" y="77.5" width="103.1" height="26" rx="13" fill="#eaeef2" stroke="#d1d9e0"/>
+<text x="26.0" y="94.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#424a53">Google Cloud</text>
+<rect x="125.1" y="77.5" width="54.6" height="26" rx="13" fill="#eaeef2" stroke="#d1d9e0"/>
+<text x="135.1" y="94.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#424a53">Azure</text>
+<rect x="185.7" y="77.5" width="61.5" height="26" rx="13" fill="#eaeef2" stroke="#d1d9e0"/>
+<text x="195.7" y="94.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#424a53">Vercel</text>
+<rect x="253.2" y="77.5" width="116.9" height="26" rx="13" fill="#eaeef2" stroke="#d1d9e0"/>
+<text x="263.2" y="94.5" font-family="ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,'Liberation Mono',monospace" font-size="11.5" fill="#424a53">GitHub Actions</text>
+</g>
+</svg>
